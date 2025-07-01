@@ -1,8 +1,9 @@
 import { useRef } from "react"
 import { NodeData } from "../../types"
 import {WorkflowNode}  from "../node"
+import { useZoom } from "../../hooks/useZoom"
 import styles from "./workflow.module.css"
-
+import { ZoomPanel } from "./zoomPanel"
 
 interface WorkFlowProps {
     nodes: NodeData[]
@@ -14,12 +15,15 @@ interface WorkFlowProps {
 
 export const WorkFlow = ({nodes,setNode, height= "500px", width= "500px", backgroundColor= "blue"}: WorkFlowProps) => {
     const ref = useRef<HTMLDivElement>(null)
+    const backgroundRef = useRef<HTMLDivElement>(null)
     const boundRect = ref.current?.getBoundingClientRect();
-  
+    const {scale,handleZoomIn,handleZoomOut} = useZoom()
     return (
-        <div ref={ref} className={styles.workflow + " " + styles[backgroundColor]} style={{height: height, width: width}}>
+        <div ref={ref} className={styles.workflowcontainer} style={{height: height, width: width,overflow: "hidden"}}>
+            <ZoomPanel handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />   
+            <div ref={backgroundRef} className={styles.workflow + " " + styles[backgroundColor]} style={{transform: `scale(${scale})`, transformOrigin: "top left",height:`calc(${height} + ${backgroundRef.current?.offsetHeight}px)`, width:`calc(${width} + ${backgroundRef.current?.offsetWidth}px)`}} />
             {nodes.map((node,idx) => (
-                <WorkflowNode key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} />
+                <WorkflowNode key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} scale={scale} />
             ))}
         </div>
     )

@@ -1,0 +1,20 @@
+.zoompanel{
+    position: absolute;
+    top: calc(100% - 5vh);
+    left: 0%;
+    z-index: 10;
+}
+
+.zoompanel button{
+    height: 4vh;
+    width: 3vh;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+    background-color: #efefef50;
+    cursor: pointer;
+    margin-left: 1vh;
+    user-select: none;
+    color: #eee;
+    font-size: 1.5vh;
+    font-weight: bolder;
+}

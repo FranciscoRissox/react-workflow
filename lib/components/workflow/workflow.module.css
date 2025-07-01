@@ -1,9 +1,11 @@
-.workflow{
+.workflowcontainer{
     width: 500px;
     height: 500px;
     position: relative;
 }
 .workflow.blue{
+    height: 100%;
+    width: 100%;
     background-color:#06c;
     background-image: linear-gradient(rgba(255,255,255,0.2) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,255,255,0.2) 2px, transparent 1px),
@@ -13,6 +15,8 @@
     background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 .workflow.purple {
+    height: 100%;
+    width: 100%;
     background-color: #800080;
     background-image: linear-gradient(rgba(255,255,255,0.2) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,255,255,0.2) 2px, transparent 1px),
@@ -22,6 +26,8 @@
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 .workflow.yellow {
+    height: 100%;
+    width: 100%;
     background-color: #e6c300;
     background-image: linear-gradient(rgba(255,255,255,0.2) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,255,255,0.2) 2px, transparent 1px),
@@ -31,6 +37,8 @@
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 .workflow.red {
+    height: 100%;
+    width: 100%;
     background-color: #c00;
     background-image: linear-gradient(rgba(255,255,255,0.2) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,255,255,0.2) 2px, transparent 1px),
@@ -40,6 +48,8 @@
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 .workflow.green {
+    height: 100%;
+    width: 100%;
     background-color: #090;
     background-image: linear-gradient(rgba(255,255,255,0.2) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,255,255,0.2) 2px, transparent 1px),
@@ -49,6 +59,8 @@
     background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 .workflow.gray {
+    height: 100%;
+    width: 100%;
     background-color: #666;
     background-image: linear-gradient(rgba(255,255,255,0.2) 2px, transparent 2px),
     linear-gradient(90deg, rgba(255,255,255,0.2) 2px, transparent 1px),

@@ -11,7 +11,7 @@ function App() {
     <div style={{width:"100vw",height:"100vh"}}>
     <button onClick={() => {addNode({position:{x:0,y:0},style:{backgroundColor:randomHexColor()}})}}>Add node</button>
     
-      <WorkFlow nodes={nodes} setNode={setNode} backgroundColor="gray" width="100%" height="100%" />
+      <WorkFlow nodes={nodes} setNode={setNode} backgroundColor="gray" width="70%" height="70%" />
    
     </div>
   )

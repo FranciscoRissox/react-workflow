@@ -6,9 +6,10 @@ type WorkflowNodeProps = {
   nodeData: NodeData;
   setPosition: (pos: { x: number; y: number }) => void;
   canvasRect: DOMRect | undefined;
+  scale: number;
 };
 
-export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect }) => {
+export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({
     startX: 0,
@@ -70,6 +71,8 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
       style={{
         left: nodeData.position.x,
         top: nodeData.position.y,
+        transform: `scale(${scale})`,
+        transformOrigin: "top left",
         position: 'absolute',
         ...(nodeData.style ?? {}),
       }}
