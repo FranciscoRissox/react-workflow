@@ -18,8 +18,18 @@ export const WorkFlow = ({nodes,setNode, height= "500px", width= "500px", backgr
     const backgroundRef = useRef<HTMLDivElement>(null)
     const boundRect = ref.current?.getBoundingClientRect();
     const {scale,handleZoomIn,handleZoomOut} = useZoom()
+
+    const handleWheel = (e: WheelEvent) => {
+        e.preventDefault()
+        if (e.deltaY < 0) {
+            handleZoomIn();
+        } else {
+            handleZoomOut();
+        }
+    };
+    
     return (
-        <div ref={ref} className={styles.workflowcontainer} style={{height: height, width: width,overflow: "hidden"}}>
+        <div ref={ref} className={styles.workflowcontainer} style={{height: height, width: width,overflow: "hidden"}} onWheel={handleWheel as any}>
             <ZoomPanel handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />   
             <div ref={backgroundRef} className={styles.workflow + " " + styles[backgroundColor]} style={{transform: `scale(${scale})`, transformOrigin: "top left",height:`calc(${height} + ${backgroundRef.current?.offsetHeight}px)`, width:`calc(${width} + ${backgroundRef.current?.offsetWidth}px)`}} />
             {nodes.map((node,idx) => (
