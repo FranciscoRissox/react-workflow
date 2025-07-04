@@ -35,7 +35,7 @@ export const WorkFlow = ({nodes,setNode, height= "500px", width= "500px", backgr
                     <WorkflowNode key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} scale={scale} />
                 ))}
             </div>
-            {/*<ZoomPanel handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />   */}
+            <ZoomPanel handleZoomIn={()=>handleZoom(0,0,-1)} handleZoomOut={()=>handleZoom(0,0,1)} />
         </div>
     )
 }   
