@@ -1,18 +1,53 @@
 import { useState } from "react"
 
 const MAX=2
-const MIN=0.1
+const MIN=0.8
 
-export const useZoom = () => {
+export const useZoomPan = () => {
+    const [origin,setOrigin] = useState({x:-2500,y:-2500})
     const [scale,setScale] = useState(1)
+    const [isDragging,setIsDragging] = useState(false)
+    const [lastX,setLastX] = useState<number|null>(null)
+    const [lastY,setLastY] = useState<number|null>(null)
 
-    const handleZoomIn = () => {
-        setScale(scale => Math.min(scale + 0.1,MAX))
+    const handleZoom = (mouseX:number,mouseY:number,delta:number) => {
+        const scaleAmount = 0.1;
+
+        const oldScale = scale;
+        if (delta < 0) {
+            setScale(scale => Math.min(scale + scaleAmount,MAX));
+        } else {
+            setScale(scale => Math.max(scale - scaleAmount,MIN));
+        }
+
+        setOrigin(origin => ({x:origin.x - (mouseX - origin.x) * (scale / oldScale - 1),y:origin.y - (mouseY - origin.y) * (scale / oldScale - 1)}));
     }
 
-    const handleZoomOut = () => {
-        setScale(scale => Math.max(scale - 0.1,MIN))
+    const handleMouseDown = (clientX:number,clientY:number) => {
+        setIsDragging(true);
+        setLastX(clientX);
+        setLastY(clientY);
     }
 
-    return {scale,handleZoomIn,handleZoomOut}
+    const handleMouseMove = (clientX:number,clientY:number) => {
+        if (isDragging) {
+            if (lastX && lastY) {
+                setOrigin(origin => {
+                    const newX = Math.max(-5000,Math.min(-100,origin.x + (clientX - lastX)));
+                    const newY = Math.max(-5000,Math.min(-100,origin.y + (clientY - lastY)));
+                    return {x:newX,y:newY};
+                });
+            }
+            setLastX(clientX);
+            setLastY(clientY);
+          }
+    }
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        setLastX(null);
+        setLastY(null);
+    }
+
+    return {scale,origin,handleZoom,handleMouseDown,handleMouseMove,handleMouseUp}
 }

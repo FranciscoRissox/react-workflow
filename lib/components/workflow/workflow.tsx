@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { NodeData } from "../../types"
 import {WorkflowNode}  from "../node"
-import { useZoom } from "../../hooks/useZoom"
+import { useZoomPan } from "../../hooks/useZoom"
 import styles from "./workflow.module.css"
 import { ZoomPanel } from "./zoomPanel"
 
@@ -15,26 +15,27 @@ interface WorkFlowProps {
 
 export const WorkFlow = ({nodes,setNode, height= "500px", width= "500px", backgroundColor= "blue"}: WorkFlowProps) => {
     const ref = useRef<HTMLDivElement>(null)
-    const backgroundRef = useRef<HTMLDivElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
     const boundRect = ref.current?.getBoundingClientRect();
-    const {scale,handleZoomIn,handleZoomOut} = useZoom()
+    const {scale,origin,handleZoom,handleMouseDown,handleMouseMove,handleMouseUp} = useZoomPan()
 
     const handleWheel = (e: WheelEvent) => {
-        e.preventDefault()
-        if (e.deltaY < 0) {
-            handleZoomIn();
-        } else {
-            handleZoomOut();
-        }
+        handleZoom(e.clientX,e.clientY,e.deltaY)
     };
+
+    const stopPropagation = (e: any,func: any) => {
+        e.stopPropagation()
+        func(e)
+    }
     
     return (
-        <div ref={ref} className={styles.workflowcontainer} style={{height: height, width: width,overflow: "hidden"}} onWheel={handleWheel as any}>
-            <ZoomPanel handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />   
-            <div ref={backgroundRef} className={styles.workflow + " " + styles[backgroundColor]} style={{transform: `scale(${scale})`, transformOrigin: "top left",height:`calc(${height} + ${backgroundRef.current?.offsetHeight}px)`, width:`calc(${width} + ${backgroundRef.current?.offsetWidth}px)`}} />
-            {nodes.map((node,idx) => (
-                <WorkflowNode key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} scale={scale} />
-            ))}
+        <div ref={containerRef} className={styles.workflowcontainer} style={{height: height, width: width,overflow: "hidden"}} onWheel={(e)=>stopPropagation(e,handleWheel)} onMouseDown={(e) => stopPropagation(e,()=>handleMouseDown(e.clientX,e.clientY))} onMouseMove={(e) => stopPropagation(e,()=>handleMouseMove(e.clientX,e.clientY))} onMouseUp={(e)=>stopPropagation(e,handleMouseUp)}>
+            <div className={styles.workflowcontent+" "+styles.workflow+" "+styles[backgroundColor]} ref={ref} style={{height:"25000px",width:"25000px",transform: `translate(${origin.x}px, ${origin.y}px) scale(${scale})`}}>
+                {nodes.map((node,idx) => (
+                    <WorkflowNode key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} scale={scale} />
+                ))}
+            </div>
+            {/*<ZoomPanel handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />   */}
         </div>
     )
 }   

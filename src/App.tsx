@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {useWorkflow,WorkFlow} from "../lib/main"
 
 const randomHexColor = () => {
@@ -6,13 +7,13 @@ const randomHexColor = () => {
 
 function App() {
     const {nodes,setNode,addNode} = useWorkflow()
-
+  useEffect(() => {
+    addNode({position:{x:5000,y:5000},style:{backgroundColor:randomHexColor()}})
+  },[])
   return (
-    <div style={{width:"100vw",height:"100vh"}}>
-    <button onClick={() => {addNode({position:{x:0,y:0},style:{backgroundColor:randomHexColor()}})}}>Add node</button>
-    
-      <WorkFlow nodes={nodes} setNode={setNode} backgroundColor="gray" width="70%" height="70%" />
-   
+    <div style={{}}>
+      <button style={{zIndex:200}} onClick={() => {addNode({position:{x:0,y:0},style:{backgroundColor:randomHexColor()}})}}>Add node</button>
+      <WorkFlow nodes={nodes} setNode={setNode} backgroundColor="gray" width="1000px" height="800px"/>
     </div>
   )
 }
