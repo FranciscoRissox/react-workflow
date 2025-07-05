@@ -11,7 +11,7 @@ type WorkflowNodeProps = {
   canvasRect: DOMRect | undefined;
   scale: number;
   canvasRef: React.RefObject<HTMLDivElement>;
-  selectNode: (id:string,position:SocketPosition) => void
+  selectNode: (id:string,position:SocketPosition) => boolean
   links:LinkNodeData[]
   setNodeRef : (id:string,nodeRef:React.RefObject<HTMLDivElement>) => void
 };
