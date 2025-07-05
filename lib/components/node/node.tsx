@@ -11,12 +11,12 @@ type WorkflowNodeProps = {
   canvasRect: DOMRect | undefined;
   scale: number;
   canvasRef: React.RefObject<HTMLDivElement>;
-  selectNode: (id:string,position:SocketPosition) => boolean
-  links:LinkNodeData[]
-  setNodeRef : (id:string,nodeRef:React.RefObject<HTMLDivElement>) => void
+  selectNode: (id: string, position: SocketPosition) => boolean;
+  links: LinkNodeData[];
+  setNodeRef: (id: string, nodeRef: React.RefObject<HTMLDivElement>) => void;
 };
 
-export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale,canvasRef,selectNode,links,setNodeRef }) => {
+export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale, canvasRef, selectNode, links, setNodeRef }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({
     startX: 0,
@@ -25,18 +25,16 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     initialY: 0,
   });
 
-  useEffect(()=>{
-    if(nodeRef.current){
-        setNodeRef(nodeData.id,nodeRef as any)
+  useEffect(() => {
+    if (nodeRef.current) {
+      setNodeRef(nodeData.id, nodeRef as any);
     }
-  },[nodeData.id,nodeRef.current])
+  }, [nodeData.id, nodeRef.current]);
 
-
-
-
+  // Mouse handlers
   const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
     posRef.current.startX = e.clientX;
     posRef.current.startY = e.clientY;
     posRef.current.initialX = nodeData.position.x;
@@ -47,11 +45,50 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
   };
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
     const dx = e.clientX - posRef.current.startX;
     const dy = e.clientY - posRef.current.startY;
 
+    updatePosition(dx, dy);
+  }, [canvasRect]);
+
+  const handleMouseUp = () => {
+    canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
+    canvasRef.current?.removeEventListener('mouseup', handleMouseUp);
+  };
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const touch = e.touches[0];
+    posRef.current.startX = touch.clientX;
+    posRef.current.startY = touch.clientY;
+    posRef.current.initialX = nodeData.position.x;
+    posRef.current.initialY = nodeData.position.y;
+
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const touch = e.touches[0];
+    const dx = touch.clientX - posRef.current.startX;
+    const dy = touch.clientY - posRef.current.startY;
+
+    updatePosition(dx, dy);
+  };
+
+  const handleTouchEnd = () => {
+    window.removeEventListener('touchmove', handleTouchMove);
+    window.removeEventListener('touchend', handleTouchEnd);
+  };
+
+  // Common position update logic
+  const updatePosition = (dx: number, dy: number) => {
     let newX = posRef.current.initialX + dx;
     let newY = posRef.current.initialY + dy;
 
@@ -68,20 +105,18 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     }
 
     setPosition({ x: newX, y: newY });
-  },[canvasRect]);
-
-  const handleMouseUp = () => {
-    canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
-    canvasRef.current?.removeEventListener('mouseup', handleMouseUp);
   };
 
+  // Cleanup
   useEffect(() => {
-    // Limpieza por si acaso
     return () => {
       canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
       canvasRef.current?.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
+
   return (
     <div
       ref={nodeRef}
@@ -95,13 +130,17 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
         ...(nodeData.style ?? {}),
       }}
     >
-      <div  className={styles.workflownodeheader} onMouseDown={handleMouseDown}>
+      <div
+        className={styles.workflownodeheader}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+      >
         X
       </div>
       {
-        nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key:string)=>{
-          const socketPosition = SocketPosition[key as keyof typeof SocketPosition]
-          return <Socket  connected={socketIsConnected(socketPosition,links)} selectNode={(position:SocketPosition)=>selectNode(nodeData.id,position)} position={socketPosition} scale={scale}/>
+        nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key: string) => {
+          const socketPosition = SocketPosition[key as keyof typeof SocketPosition];
+          return <Socket key={key} connected={socketIsConnected(socketPosition, links)} selectNode={(position: SocketPosition) => selectNode(nodeData.id, position)} position={socketPosition} scale={scale} />;
         })
       }
       {nodeData.children}
