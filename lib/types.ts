@@ -5,9 +5,26 @@ export type NodeData = {
     children?: React.ReactNode
     style?: React.CSSProperties
     enabledSockets?:{
-        up?:boolean,
-        down?:boolean,
-        left?:boolean,
-        right?:boolean
+        UP?:boolean,
+        DOWN?:boolean,
+        LEFT?:boolean,
+        RIGHT?:boolean
     }
+}
+
+export type LinkNode = {
+    startNode: LinkNodeData;
+    endNode: LinkNodeData;
+}
+
+export type LinkNodeData = {
+    id: string;
+    socket:SocketPosition;
+}
+
+export enum SocketPosition {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
 }

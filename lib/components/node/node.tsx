@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './node.module.css';
-import { NodeData } from '../../types';
+import { LinkNodeData, NodeData } from '../../types';
 import { Socket } from './socket';
+import { SocketPosition } from '../../types';
+import { socketIsConnected } from '../../utils';
 
 type WorkflowNodeProps = {
   nodeData: NodeData;
@@ -9,9 +11,11 @@ type WorkflowNodeProps = {
   canvasRect: DOMRect | undefined;
   scale: number;
   canvasRef: React.RefObject<HTMLDivElement>;
+  selectNode: (id:string,position:SocketPosition) => void
+  links:LinkNodeData[]
 };
 
-export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale,canvasRef }) => {
+export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale,canvasRef,selectNode,links }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({
     startX: 0,
@@ -86,7 +90,8 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
       </div>
       {
         nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key:string)=>{
-            if(nodeData.enabledSockets![key as "up" | "down" | "left" | "right"]) return <Socket position={key as "up" | "down" | "left" | "right"} scale={scale}/>
+          const socketPosition = SocketPosition[key as keyof typeof SocketPosition]
+          return <Socket connected={socketIsConnected(socketPosition,links)} selectNode={(position:SocketPosition)=>selectNode(nodeData.id,position)} position={socketPosition} scale={scale}/>
         })
       }
       {nodeData.children}
