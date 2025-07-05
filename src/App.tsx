@@ -12,7 +12,7 @@ function App() {
   },[])
   return (
     <div style={{}}>
-      <button style={{zIndex:200}} onClick={() => {addNode({position:{x:0,y:0},style:{backgroundColor:randomHexColor()}})}}>Add node</button>
+      <button style={{zIndex:200}} onClick={() => {addNode({position:{x:5000,y:5000},style:{backgroundColor:randomHexColor()}})}}>Add node</button>
       <WorkFlow nodes={nodes} setNode={setNode} backgroundColor="gray" width="1000px" height="800px"/>
     </div>
   )

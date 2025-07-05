@@ -32,7 +32,7 @@ export const WorkFlow = ({nodes,setNode, height= "500px", width= "500px", backgr
         <div ref={containerRef} className={styles.workflowcontainer} style={{height: height, width: width,overflow: "hidden"}} onWheel={(e)=>stopPropagation(e,handleWheel)} onMouseDown={(e) => stopPropagation(e,()=>handleMouseDown(e.clientX,e.clientY))} onMouseMove={(e) => stopPropagation(e,()=>handleMouseMove(e.clientX,e.clientY))} onMouseUp={(e)=>stopPropagation(e,handleMouseUp)}>
             <div className={styles.workflowcontent+" "+styles.workflow+" "+styles[backgroundColor]} ref={ref} style={{height:"25000px",width:"25000px",transform: `translate(${origin.x}px, ${origin.y}px) scale(${scale})`}}>
                 {nodes.map((node,idx) => (
-                    <WorkflowNode key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} scale={scale} />
+                    <WorkflowNode canvasRef={ref as any} key={node.id} nodeData={node} setPosition={(pos) => setNode(idx, {...node, position: pos})} canvasRect={boundRect} scale={scale} />
                 ))}
             </div>
             <ZoomPanel handleZoomIn={()=>handleZoom(0,0,-1)} handleZoomOut={()=>handleZoom(0,0,1)} />

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './node.module.css';
 import { NodeData } from '../../types';
 
@@ -7,9 +7,10 @@ type WorkflowNodeProps = {
   setPosition: (pos: { x: number; y: number }) => void;
   canvasRect: DOMRect | undefined;
   scale: number;
+  canvasRef: React.RefObject<HTMLDivElement>;
 };
 
-export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale }) => {
+export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale,canvasRef }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({
     startX: 0,
@@ -19,18 +20,20 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
   });
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.preventDefault()
+    e.stopPropagation()
     posRef.current.startX = e.clientX;
     posRef.current.startY = e.clientY;
     posRef.current.initialX = nodeData.position.x;
     posRef.current.initialY = nodeData.position.y;
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    canvasRef.current?.addEventListener('mousemove', handleMouseMove);
+    canvasRef.current?.addEventListener('mouseup', handleMouseUp);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    e.preventDefault();
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     const dx = e.clientX - posRef.current.startX;
     const dy = e.clientY - posRef.current.startY;
 
@@ -50,18 +53,18 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     }
 
     setPosition({ x: newX, y: newY });
-  };
+  },[canvasRect]);
 
   const handleMouseUp = () => {
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
+    canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
+    canvasRef.current?.removeEventListener('mouseup', handleMouseUp);
   };
 
   useEffect(() => {
     // Limpieza por si acaso
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
+      canvasRef.current?.removeEventListener('mouseup', handleMouseUp);
     };
   }, []);
   return (
@@ -77,7 +80,7 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
         ...(nodeData.style ?? {}),
       }}
     >
-      <div className={styles.workflownodeheader} onMouseDown={handleMouseDown}>
+      <div  className={styles.workflownodeheader} onMouseDown={handleMouseDown}>
         X
       </div>
       {nodeData.children}
