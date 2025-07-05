@@ -1,0 +1,9 @@
+.socket {
+    width: 16px;
+    height: 16px;
+    border: 1px solid gray;
+    z-index: 10;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #fefefe;
+}

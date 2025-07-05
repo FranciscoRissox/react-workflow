@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './node.module.css';
 import { NodeData } from '../../types';
+import { Socket } from './socket';
 
 type WorkflowNodeProps = {
   nodeData: NodeData;
@@ -83,6 +84,11 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
       <div  className={styles.workflownodeheader} onMouseDown={handleMouseDown}>
         X
       </div>
+      {
+        nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key:string)=>{
+            if(nodeData.enabledSockets![key as "up" | "down" | "left" | "right"]) return <Socket position={key as "up" | "down" | "left" | "right"} scale={scale}/>
+        })
+      }
       {nodeData.children}
     </div>
   );

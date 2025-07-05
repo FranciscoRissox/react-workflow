@@ -13,7 +13,7 @@ export const useWorkflow = ({initialNodes}: UseWorkflowProps | undefined={}) => 
         setNodes(nodes.map((node,i) => i === idx ? newNode : node))
     }
 
-    const addNode = (node: Pick<NodeData, "position" | "children" | "className" | "style">) => {
+    const addNode = (node: Pick<NodeData, "position" | "children" | "className" | "style"|"enabledSockets">) => {
         setNodes([...nodes,{id:uuid(), ...node}])
     }
 

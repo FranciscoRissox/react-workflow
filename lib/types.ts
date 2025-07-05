@@ -4,4 +4,10 @@ export type NodeData = {
     className?: string
     children?: React.ReactNode
     style?: React.CSSProperties
+    enabledSockets?:{
+        up?:boolean,
+        down?:boolean,
+        left?:boolean,
+        right?:boolean
+    }
 }
