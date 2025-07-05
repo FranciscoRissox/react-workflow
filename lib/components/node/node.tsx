@@ -13,9 +13,10 @@ type WorkflowNodeProps = {
   canvasRef: React.RefObject<HTMLDivElement>;
   selectNode: (id:string,position:SocketPosition) => void
   links:LinkNodeData[]
+  setNodeRef : (id:string,nodeRef:React.RefObject<HTMLDivElement>) => void
 };
 
-export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale,canvasRef,selectNode,links }) => {
+export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale,canvasRef,selectNode,links,setNodeRef }) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({
     startX: 0,
@@ -23,6 +24,15 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     initialX: 0,
     initialY: 0,
   });
+
+  useEffect(()=>{
+    if(nodeRef.current){
+        setNodeRef(nodeData.id,nodeRef as any)
+    }
+  },[nodeData.id,nodeRef.current])
+
+
+
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -91,7 +101,7 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
       {
         nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key:string)=>{
           const socketPosition = SocketPosition[key as keyof typeof SocketPosition]
-          return <Socket connected={socketIsConnected(socketPosition,links)} selectNode={(position:SocketPosition)=>selectNode(nodeData.id,position)} position={socketPosition} scale={scale}/>
+          return <Socket  connected={socketIsConnected(socketPosition,links)} selectNode={(position:SocketPosition)=>selectNode(nodeData.id,position)} position={socketPosition} scale={scale}/>
         })
       }
       {nodeData.children}

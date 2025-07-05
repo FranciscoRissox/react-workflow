@@ -4,6 +4,13 @@ export type NodeData = {
     className?: string
     children?: React.ReactNode
     style?: React.CSSProperties
+    nodeRef?:React.RefObject<HTMLDivElement>
+    socketRef?:{
+        UP:React.RefObject<HTMLDivElement>|null,
+        DOWN:React.RefObject<HTMLDivElement>|null,
+        LEFT:React.RefObject<HTMLDivElement>|null,
+        RIGHT:React.RefObject<HTMLDivElement>|null
+    }
     enabledSockets?:{
         UP?:boolean,
         DOWN?:boolean,

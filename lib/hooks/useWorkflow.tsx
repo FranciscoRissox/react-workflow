@@ -22,11 +22,16 @@ export const useWorkflow = ({initialNodes}: UseWorkflowProps | undefined={}) => 
         setLinks([...links,link])
     }
 
+    const setNodeRef = (id:string,nodeRef:React.RefObject<HTMLDivElement>) => {
+        setNodes(nodes.map(node=>node.id===id?{...node,nodeRef:nodeRef}:node))
+    }
+
     return {
         nodes,
         setNode,
         addNode,
         links,
-        addLink
+        addLink,
+        setNodeRef
     }
 }

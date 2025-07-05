@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const MAX=2
+const MAX=1.2
 const MIN=0.8
 
 export const useZoomPan = () => {
