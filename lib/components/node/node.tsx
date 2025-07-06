@@ -33,7 +33,6 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
 
   // Mouse handlers
   const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     posRef.current.startX = e.clientX;
     posRef.current.startY = e.clientY;
@@ -45,7 +44,6 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
   };
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     const dx = e.clientX - posRef.current.startX;
     const dy = e.clientY - posRef.current.startY;
@@ -60,7 +58,6 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
 
   // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     const touch = e.touches[0];
     posRef.current.startX = touch.clientX;
@@ -68,12 +65,11 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     posRef.current.initialX = nodeData.position.x;
     posRef.current.initialY = nodeData.position.y;
 
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
+    canvasRef.current?.addEventListener('touchmove', handleTouchMove, { passive: false });
+    canvasRef.current?.addEventListener('touchend', handleTouchEnd);
   };
 
   const handleTouchMove = (e: TouchEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     const touch = e.touches[0];
     const dx = touch.clientX - posRef.current.startX;
@@ -83,8 +79,8 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
   };
 
   const handleTouchEnd = () => {
-    window.removeEventListener('touchmove', handleTouchMove);
-    window.removeEventListener('touchend', handleTouchEnd);
+    canvasRef.current?.removeEventListener('touchmove', handleTouchMove);
+    canvasRef.current?.removeEventListener('touchend', handleTouchEnd);
   };
 
   // Common position update logic
@@ -112,8 +108,8 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     return () => {
       canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
       canvasRef.current?.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
+      canvasRef.current?.removeEventListener('touchmove', handleTouchMove);
+      canvasRef.current?.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 

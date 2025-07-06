@@ -20,7 +20,10 @@ export const useZoomPan = () => {
             setScale(scale => Math.max(scale - scaleAmount,MIN));
         }
 
-        setOrigin(origin => ({x:origin.x - (mouseX - origin.x) * (scale / oldScale - 1),y:origin.y - (mouseY - origin.y) * (scale / oldScale - 1)}));
+        setOrigin(origin => ({
+            x: origin.x - (mouseX - origin.x) * (scale / oldScale - 1),
+            y: origin.y - (mouseY - origin.y) * (scale / oldScale - 1)
+        }));
     }
 
     const handleMouseDown = (clientX:number,clientY:number) => {
@@ -31,7 +34,7 @@ export const useZoomPan = () => {
 
     const handleMouseMove = (clientX:number,clientY:number) => {
         if (isDragging) {
-            if (lastX && lastY) {
+            if (lastX !== null && lastY !== null) {
                 setOrigin(origin => {
                     const newX = Math.max(-5000,Math.min(-100,origin.x + (clientX - lastX)));
                     const newY = Math.max(-5000,Math.min(-100,origin.y + (clientY - lastY)));
@@ -40,7 +43,7 @@ export const useZoomPan = () => {
             }
             setLastX(clientX);
             setLastY(clientY);
-          }
+        }
     }
 
     const handleMouseUp = () => {
@@ -49,5 +52,36 @@ export const useZoomPan = () => {
         setLastY(null);
     }
 
-    return {scale,origin,handleZoom,handleMouseDown,handleMouseMove,handleMouseUp}
+    // Touch handlers
+    const handleTouchStart = (touchX: number, touchY: number) => {
+        setIsDragging(true);
+        setLastX(touchX);
+        setLastY(touchY);
+    };
+
+    const handleTouchMove = (touchX: number, touchY: number) => {
+        if (isDragging) {
+            if (lastX !== null && lastY !== null) {
+                setOrigin(origin => {
+                    const newX = Math.max(-5000, Math.min(-100, origin.x + (touchX - lastX)));
+                    const newY = Math.max(-5000, Math.min(-100, origin.y + (touchY - lastY)));
+                    return { x: newX, y: newY };
+                });
+            }
+            setLastX(touchX);
+            setLastY(touchY);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setIsDragging(false);
+        setLastX(null);
+        setLastY(null);
+    };
+
+    return {
+        scale, origin, handleZoom,
+        handleMouseDown, handleMouseMove, handleMouseUp,
+        handleTouchStart, handleTouchMove, handleTouchEnd
+    }
 }
