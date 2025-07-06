@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 const MAX=1.2
 const MIN=0.8
@@ -9,6 +9,9 @@ export const useZoomPan = () => {
     const [isDragging,setIsDragging] = useState(false)
     const [lastX,setLastX] = useState<number|null>(null)
     const [lastY,setLastY] = useState<number|null>(null)
+
+    const initialPinchDistance = useRef<number | null>(null);
+    const lastScale = useRef<number>(scale);
 
     const handleZoom = (mouseX:number,mouseY:number,delta:number) => {
         const scaleAmount = 0.1;
@@ -79,9 +82,30 @@ export const useZoomPan = () => {
         setLastY(null);
     };
 
+    const handlePinchStart = (distance: number) => {
+        initialPinchDistance.current = distance;
+        lastScale.current = scale;
+      };
+    
+
+    const handlePinchMove = (distance:number) => {
+        if (initialPinchDistance.current) {
+            const scaleChange = distance / initialPinchDistance.current;
+            let newScale = lastScale.current * scaleChange;
+      
+            newScale = Math.max(MIN, Math.min(MAX, newScale));
+            setScale(newScale);
+          }
+    }
+
+    const handlePinchEnd = () => {
+        initialPinchDistance.current = null;
+      };
+
     return {
         scale, origin, handleZoom,
         handleMouseDown, handleMouseMove, handleMouseUp,
-        handleTouchStart, handleTouchMove, handleTouchEnd
+        handleTouchStart, handleTouchMove, handleTouchEnd,
+        handlePinchMove, handlePinchEnd, handlePinchStart
     }
 }

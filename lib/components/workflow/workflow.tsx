@@ -28,7 +28,8 @@ export const WorkFlow = ({ nodes, links, addLink, setNode, setNodeRef, height = 
     const {
       scale, origin, handleZoom,
       handleMouseDown, handleMouseMove, handleMouseUp,
-      handleTouchStart, handleTouchMove, handleTouchEnd
+      handleTouchStart, handleTouchMove, handleTouchEnd,
+      handlePinchMove, handlePinchEnd, handlePinchStart
     } = useZoomPan()
     const { selectNode } = useNodeLink((link: LinkNode) => addLink(link))
   
@@ -44,19 +45,48 @@ export const WorkFlow = ({ nodes, links, addLink, setNode, setNodeRef, height = 
     // Touch event wrappers
     const onTouchStart = (e: React.TouchEvent) => {
       e.stopPropagation();
-      const touch = e.touches[0];
-      handleTouchStart(touch.clientX, touch.clientY);
+
+      if (e.touches.length === 2) {
+        // pinch start
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+        handlePinchStart(distance);
+      } else if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        handleTouchStart(touch.clientX, touch.clientY);
+      }
     };
   
     const onTouchMove = (e: React.TouchEvent) => {
       e.stopPropagation();
-      const touch = e.touches[0];
-      handleTouchMove(touch.clientX, touch.clientY);
+
+      if (e.touches.length === 2) {
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+        handlePinchMove(distance);
+      } else if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        handleTouchMove(touch.clientX, touch.clientY);
+      }
     };
   
     const onTouchEnd = (e: React.TouchEvent) => {
       e.stopPropagation();
-      handleTouchEnd();
+        if (e.touches.length < 2) {
+    handlePinchEnd();
+  }
+
+  if (e.touches.length === 0) {
+    handleTouchEnd();
+  }
     };
   
     return (

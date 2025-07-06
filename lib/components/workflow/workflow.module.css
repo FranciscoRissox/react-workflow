@@ -4,6 +4,8 @@
     position: relative;
     overflow: hidden;
     border: 1px solid #efefef;
+    touch-action: none;
+    overscroll-behavior: contain;
 }
 .workflow.blue{
     height: 100%;
