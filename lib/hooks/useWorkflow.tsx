@@ -4,17 +4,18 @@ import { v4 as uuid } from 'uuid'
 
 interface UseWorkflowProps {
     initialNodes?: NodeData[]
+    initialLinks?: LinkNode[]
 }
 
-export const useWorkflow = ({initialNodes}: UseWorkflowProps | undefined={}) => {
+export const useWorkflow = ({initialNodes,initialLinks}: UseWorkflowProps | undefined={}) => {
     const [nodes,setNodes] = useState<NodeData[]>(initialNodes || [])
-    const [links,setLinks] = useState<LinkNode[]>([])
+    const [links,setLinks] = useState<LinkNode[]>(initialLinks || [])
 
     const setNode = (idx: number, newNode: NodeData) => {
         setNodes(nodes.map((node,i) => i === idx ? newNode : node))
     }
 
-    const addNode = (node: Pick<NodeData, "position" | "children" | "className" | "style"|"enabledSockets">) => {
+    const addNode = (node: Pick<NodeData, "position" | "children" | "className" | "style"| "enabledSockets">) => {
         setNodes([...nodes,{id:uuid(), ...node}])
     }
 
@@ -27,11 +28,14 @@ export const useWorkflow = ({initialNodes}: UseWorkflowProps | undefined={}) => 
     }
 
     return {
-        nodes,
-        setNode,
-        addNode,
-        links,
-        addLink,
-        setNodeRef
+        state: {
+            nodes,links
+        },
+        actions: {
+            setNode,
+            addNode,
+            addLink,
+            setNodeRef
+        }
     }
 }

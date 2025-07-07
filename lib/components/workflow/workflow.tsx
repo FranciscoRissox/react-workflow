@@ -7,21 +7,17 @@ import { ZoomPanel } from "./zoomPanel"
 import { useNodeLink } from "../../hooks/useNodeLink"
 import { filterLinks, getNodeById,getSocketPosition } from "../../utils"
 import Curve from "../curve"
+import { useWorkflow } from "../../hooks"
 
-interface WorkFlowProps {
-    nodes: NodeData[]
-    setNode: (idx: number, node: NodeData) => void
+interface WorkFlowProps extends ReturnType<typeof useWorkflow> {
     height?: string
     width?: string
-    links: LinkNode[]
-    addLink: (link: LinkNode) => void
     backgroundColor?: 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'gray'
-    setNodeRef: (id:string,nodeRef:React.RefObject<HTMLDivElement>) => void
 }
 
 
 
-export const WorkFlow = ({ nodes, links, addLink, setNode, setNodeRef, height = "500px", width = "500px", backgroundColor = "blue" }: WorkFlowProps) => {
+export const WorkFlow = ({ state:{nodes,links}, actions:{addLink,setNode,setNodeRef}, height = "500px", width = "500px", backgroundColor = "blue" }: WorkFlowProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const boundRect = ref.current?.getBoundingClientRect();
