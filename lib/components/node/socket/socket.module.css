@@ -6,12 +6,14 @@
     border-radius: 50%;
     position: absolute;
     background-color: #fefefe;
+    cursor: pointer;
     transition: width 0.2s ease-out,height 0.2s ease-out,border-color 0.2s ease-out,background-color 0.2s ease-out;
 }
 
 .socket.connected {
     border-color: green;
     background-color: lime;
+    cursor:default;
 }
 
 .socket.connecting {
@@ -19,4 +21,5 @@
     background-color: blue;
     width: 19px;
     height: 19px;
+    cursor:default;
 }
