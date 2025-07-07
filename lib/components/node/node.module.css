@@ -1,30 +1,16 @@
 .workflownode {
     position: absolute;
     z-index: 9;
-    background-color: #afafaf;
-    text-align: center;
-    border: 3px solid #efefef;
+    background-color: #ffffff;
+    border: 3px solid #868588;
+    border-radius: 6px;
     height: 100px;
     width: 100px;
     display: flex;
     flex-direction: column;
-    justify-items: start;
-  }
-  
-  .workflownodeheader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     text-align: center;
-    padding: 10px;
+    justify-content: center;
     cursor: move;
-    background-color: #a6c1d6;
-    border: 3px solid #efefef;
-    color: #fff;
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: -42px;
-    left: -3px;
+    user-select: none;
   }
   

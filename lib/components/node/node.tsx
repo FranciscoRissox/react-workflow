@@ -125,14 +125,9 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
         position: 'absolute',
         ...(nodeData.style ?? {}),
       }}
-    >
-      <div
-        className={styles.workflownodeheader}
-        onMouseDown={handleMouseDown}
+      onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
-      >
-        X
-      </div>
+    >
       {
         nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key: string) => {
           const socketPosition = SocketPosition[key as keyof typeof SocketPosition];
