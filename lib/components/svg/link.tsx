@@ -1,6 +1,6 @@
-import { LineFigures, LineStyle } from "../types";
+import { LineFigures, LineStyle } from "../../types";
 import { v4 as uuidv4 } from 'uuid';
-interface CurveProps {
+interface LinkProps  {
   coordinates: {
     x1: number;
     y1: number;
@@ -10,7 +10,7 @@ interface CurveProps {
   style?:LineStyle
 }
 
-const Curve = ({ coordinates,style }: CurveProps) => {
+const Link = ({ coordinates,style }: LinkProps) => {
   const deltaX = Math.abs(coordinates.x2 - coordinates.x1) * 0.5;
   const deltaY = Math.abs(coordinates.y2 - coordinates.y1) * 0.5;
 
@@ -61,4 +61,4 @@ const Curve = ({ coordinates,style }: CurveProps) => {
   );
 };
 
-export default Curve;
+export default Link;

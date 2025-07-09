@@ -6,7 +6,6 @@ import styles from "./workflow.module.css"
 import { ZoomPanel } from "./zoomPanel"
 import { useNodeLink } from "../../hooks/useNodeLink"
 import { filterLinks, getNodeById,getSocketPosition } from "../../utils"
-import Curve from "../curve"
 import { useWorkflow } from "../../hooks"
 import { SvgRenderer } from "../svg"
 

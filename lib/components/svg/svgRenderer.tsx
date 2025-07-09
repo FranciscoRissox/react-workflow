@@ -2,7 +2,7 @@ import styles from "./svgRenderer.module.css"
 import { LinkNode } from "../../types"
 import { getNodeById } from "../../utils";
 import { getSocketPosition } from "../../utils";
-import Curve from "../curve";
+import Link from "./link";
 import { NodeData } from "../../types";
 
 export const SvgRenderer = ({origin,scale, links,nodes}: {origin:{x:number,y:number},scale:number, links:LinkNode[],nodes:NodeData[]}) => {
@@ -29,7 +29,7 @@ export const SvgRenderer = ({origin,scale, links,nodes}: {origin:{x:number,y:num
 
                     const lineStyle = startNode.enabledSockets?.[startSocket as keyof typeof startNode.enabledSockets]?.lineStyle
                     return (
-                        <Curve
+                        <Link
                         key={idx}
                         coordinates={{x1:startPos.x,y1:startPos.y,x2:endPos.x,y2:endPos.y}}
                         style={lineStyle}
