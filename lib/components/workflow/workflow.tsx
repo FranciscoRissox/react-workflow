@@ -1,11 +1,11 @@
 import { useRef } from 'react';
-import { LinkNode, NodeData } from '../../types';
+import { LinkNode } from '../../types';
 import { WorkflowNode } from '../node';
 import { useZoomPan } from '../../hooks/useZoom';
 import styles from './workflow.module.css';
 import { ZoomPanel } from './zoomPanel';
 import { useNodeLink } from '../../hooks/useNodeLink';
-import { filterLinks, getNodeById, getSocketPosition } from '../../utils';
+import { filterLinks } from '../../utils';
 import { useWorkflow } from '../../hooks';
 import { SvgRenderer } from '../svg';
 
