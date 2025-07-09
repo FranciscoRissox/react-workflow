@@ -1,1 +1,1 @@
-export {WorkflowNode} from "./node"
+export { WorkflowNode } from './node';

@@ -1,16 +1,15 @@
 .workflownode {
-    position: absolute;
-    z-index: 9;
-    background-color: #ffffff;
-    border: 3px solid #868588;
-    border-radius: 6px;
-    height: 100px;
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    cursor: move;
-    user-select: none;
-  }
-  
+  position: absolute;
+  z-index: 9;
+  background-color: #ffffff;
+  border: 3px solid #868588;
+  border-radius: 6px;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  cursor: move;
+  user-select: none;
+}

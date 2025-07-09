@@ -16,7 +16,16 @@ type WorkflowNodeProps = {
   setNodeRef: (id: string, nodeRef: React.RefObject<HTMLDivElement>) => void;
 };
 
-export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPosition, canvasRect, scale, canvasRef, selectNode, links, setNodeRef }) => {
+export const WorkflowNode: React.FC<WorkflowNodeProps> = ({
+  nodeData,
+  setPosition,
+  canvasRect,
+  scale,
+  canvasRef,
+  selectNode,
+  links,
+  setNodeRef,
+}) => {
   const nodeRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({
     startX: 0,
@@ -43,13 +52,16 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
     canvasRef.current?.addEventListener('mouseup', handleMouseUp);
   };
 
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    e.stopPropagation();
-    const dx = e.clientX - posRef.current.startX;
-    const dy = e.clientY - posRef.current.startY;
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      e.stopPropagation();
+      const dx = e.clientX - posRef.current.startX;
+      const dy = e.clientY - posRef.current.startY;
 
-    updatePosition(dx, dy);
-  }, [canvasRect]);
+      updatePosition(dx, dy);
+    },
+    [canvasRect]
+  );
 
   const handleMouseUp = () => {
     canvasRef.current?.removeEventListener('mousemove', handleMouseMove);
@@ -121,19 +133,26 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({ nodeData, setPositio
         left: nodeData.position.x,
         top: nodeData.position.y,
         transform: `scale(${scale})`,
-        transformOrigin: "top left",
+        transformOrigin: 'top left',
         position: 'absolute',
         ...(nodeData.style ?? {}),
       }}
       onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
+      onTouchStart={handleTouchStart}
     >
-      {
-        nodeData.enabledSockets && Object.keys(nodeData.enabledSockets).map((key: string) => {
+      {nodeData.enabledSockets &&
+        Object.keys(nodeData.enabledSockets).map((key: string) => {
           const socketPosition = SocketPosition[key as keyof typeof SocketPosition];
-          return <Socket key={key} connected={socketIsConnected(socketPosition, links)} selectNode={(position: SocketPosition) => selectNode(nodeData.id, position)} position={socketPosition} scale={scale} />;
-        })
-      }
+          return (
+            <Socket
+              key={key}
+              connected={socketIsConnected(socketPosition, links)}
+              selectNode={(position: SocketPosition) => selectNode(nodeData.id, position)}
+              position={socketPosition}
+              scale={scale}
+            />
+          );
+        })}
       {nodeData.children}
     </div>
   );

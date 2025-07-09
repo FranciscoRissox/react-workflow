@@ -1,21 +1,31 @@
-import { useEffect } from "react";
-import {useWorkflow,WorkFlow} from "../lib/main"
+import { useEffect } from 'react';
+import { useWorkflow, WorkFlow } from '../lib/main';
 
 const randomHexColor = () => {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
-}
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+};
 
 function App() {
-    const {nodes,setNode,addNode} = useWorkflow()
+  const workflowHook = useWorkflow();
   useEffect(() => {
-    addNode({position:{x:5000,y:5000},style:{backgroundColor:randomHexColor()}})
-  },[])
+    workflowHook.actions.addNode({ position: { x: 5000, y: 5000 }, style: { backgroundColor: randomHexColor() } });
+  }, []);
   return (
     <div style={{}}>
-      <button style={{zIndex:200}} onClick={() => {addNode({position:{x:5000,y:5000},style:{backgroundColor:randomHexColor()}})}}>Add node</button>
-      <WorkFlow nodes={nodes} setNode={setNode} backgroundColor="gray" width="1000px" height="800px"/>
+      <button
+        style={{ zIndex: 200 }}
+        onClick={() => {
+          workflowHook.actions.addNode({
+            position: { x: 5000, y: 5000 },
+            style: { backgroundColor: randomHexColor() },
+          });
+        }}
+      >
+        Add node
+      </button>
+      <WorkFlow {...workflowHook} backgroundColor="gray" width="1000px" height="800px" />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

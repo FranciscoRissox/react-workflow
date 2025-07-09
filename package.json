@@ -12,15 +12,15 @@
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build",
     "prepublishOnly": "npm run build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier --write \"**/*.{css,ts,tsx}\""
   },
   "sideEffects": [
     "**/*.css"
   ],
   "peerDependencies": {
     "react": ">=17",
-    "react-dom": ">=17",
-    "uuid": ">=11.1.0"
+    "react-dom": ">=17"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
@@ -36,6 +36,10 @@
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0",
     "vite-plugin-dts": "^4.5.4",
-    "vite-plugin-lib-inject-css": "^2.2.2"
+    "vite-plugin-lib-inject-css": "^2.2.2",
+    "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "uuid": "^11.1.0"
   }
 }
