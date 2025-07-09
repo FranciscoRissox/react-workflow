@@ -1,3 +1,22 @@
+export enum LineFigures {
+    ARROW="arrow",
+    CIRCLE="circle",
+    NONE="none"
+}
+
+export type LineStyle = {
+    strokeWidth?:number,
+    strokeColor?:string,
+    strokeStyle?:string,
+    endFigure?:LineFigures,
+    startFigure?:LineFigures
+}
+
+export type SocketConfig = {
+    lineStyle?: LineStyle
+    clickable?: boolean 
+}
+
 export type NodeData = {
     id: string;
     position: { x: number; y: number };
@@ -12,10 +31,10 @@ export type NodeData = {
         RIGHT:React.RefObject<HTMLDivElement>|null
     }
     enabledSockets?:{
-        UP?:boolean,
-        DOWN?:boolean,
-        LEFT?:boolean,
-        RIGHT?:boolean
+        UP?:SocketConfig,
+        DOWN?:SocketConfig,
+        LEFT?:SocketConfig,
+        RIGHT?:SocketConfig
     }
 }
 
@@ -30,8 +49,8 @@ export type LinkNodeData = {
 }
 
 export enum SocketPosition {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+    UP="UP",
+    DOWN="DOWN",
+    LEFT="LEFT",
+    RIGHT="RIGHT"
 }

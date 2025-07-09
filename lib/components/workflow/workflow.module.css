@@ -80,11 +80,3 @@
     transition: transform 0.1s ease-out;
     z-index: 2;
 }
-.svgcontent{
-    position: absolute;
-    top:0;
-    left:0;
-    transform-origin: top left;
-    transition: transform 0.1s ease-out;
-    z-index: 3;
-}

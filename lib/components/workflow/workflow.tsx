@@ -8,6 +8,7 @@ import { useNodeLink } from "../../hooks/useNodeLink"
 import { filterLinks, getNodeById,getSocketPosition } from "../../utils"
 import Curve from "../curve"
 import { useWorkflow } from "../../hooks"
+import { SvgRenderer } from "../svg"
 
 interface WorkFlowProps extends ReturnType<typeof useWorkflow> {
     height?: string
@@ -98,40 +99,7 @@ export const WorkFlow = ({ state:{nodes,links}, actions:{addLink,setNode,setNode
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        <svg
-                    className={styles.svgcontent}
-                    width="25000"
-                    height="25000"
-                    style={{
-                    transform: `translate(${origin.x}px, ${origin.y}px) scale(${scale})`,
-                    transformOrigin: "top left",
-                    pointerEvents: "none",
-                    }}
-                >
-                    {links.map((link, idx) => {
-                    const startNode = getNodeById(link.startNode.id, nodes);
-                    const endNode = getNodeById(link.endNode.id, nodes);
-
-                    const startSocket = link.startNode.socket
-                    const endSocket = link.endNode.socket
-                    
-                    if(!startNode.nodeRef || !endNode.nodeRef){
-                        return null
-                    }
-                    const startPos = getSocketPosition(startSocket,startNode?.position,startNode?.nodeRef.current!.getBoundingClientRect()!,scale)
-                    const endPos = getSocketPosition(endSocket,endNode?.position,endNode?.nodeRef.current!.getBoundingClientRect()!,scale)
-
-                    return (
-                        <Curve
-                        key={idx}
-                        x1={startPos.x}
-                        y1={startPos.y}
-                        x2={endPos.x}
-                        y2={endPos.y}
-                        />
-                    );
-                    })}
-            </svg>
+        <SvgRenderer origin={origin} scale={scale} links={links} nodes={nodes} />
             <div className={styles.workflowcontent+" "+styles.workflow+" "+styles[backgroundColor]} ref={ref} style={{height:"25000px",width:"25000px",transform: `translate(${origin.x}px, ${origin.y}px) scale(${scale})`}}>
                 {nodes.map((node,idx) => {
                     return (
