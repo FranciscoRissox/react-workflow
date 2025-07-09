@@ -16,6 +16,8 @@ type WorkflowNodeProps = {
   setNodeRef: (id: string, nodeRef: React.RefObject<HTMLDivElement>) => void;
 };
 
+const OFFSET = 2500
+
 export const WorkflowNode: React.FC<WorkflowNodeProps> = ({
   nodeData,
   setPosition,
@@ -130,8 +132,8 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({
       ref={nodeRef}
       className={`${styles.workflownode} ${nodeData.className ?? ''}`}
       style={{
-        left: nodeData.position.x,
-        top: nodeData.position.y,
+        left: nodeData.position.x + OFFSET,
+        top: nodeData.position.y + OFFSET,
         transform: `scale(${scale})`,
         transformOrigin: 'top left',
         position: 'absolute',
