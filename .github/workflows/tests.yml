@@ -1,5 +1,5 @@
-name: Playwright tests
-run-name: ${{github.actor}} is running tests
+name: Test
+run-name: ${{github.actor}} is running playwright tests
 on: [push]
 
 jobs:
