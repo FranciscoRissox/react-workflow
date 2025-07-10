@@ -16,7 +16,7 @@ type WorkflowNodeProps = {
   setNodeRef: (id: string, nodeRef: React.RefObject<HTMLDivElement>) => void;
 };
 
-const OFFSET = 2500
+const OFFSET = 2500;
 
 export const WorkflowNode: React.FC<WorkflowNodeProps> = ({
   nodeData,
@@ -129,6 +129,7 @@ export const WorkflowNode: React.FC<WorkflowNodeProps> = ({
 
   return (
     <div
+      data-testid="workflow-node"
       ref={nodeRef}
       className={`${styles.workflownode} ${nodeData.className ?? ''}`}
       style={{
