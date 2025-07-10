@@ -11,10 +11,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build",
-    "build-showcase": "tsc --p ./tsconfig-showcase-build.json && vite build",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
-    "prettier": "prettier --write \"**/*.{css,ts,tsx}\""
+    "prettier": "prettier --write \"**/*.{css,ts,tsx}\"",
+    "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "sideEffects": [
     "**/*.css"
@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "@playwright/experimental-ct-react": "^1.53.2",
+    "@types/node": "^24.0.12",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
@@ -33,12 +35,12 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "glob": "^11.0.3",
     "globals": "^16.2.0",
+    "prettier": "^3.6.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0",
     "vite-plugin-dts": "^4.5.4",
-    "vite-plugin-lib-inject-css": "^2.2.2",
-    "prettier": "^3.6.2"
+    "vite-plugin-lib-inject-css": "^2.2.2"
   },
   "dependencies": {
     "uuid": "^11.1.0"
