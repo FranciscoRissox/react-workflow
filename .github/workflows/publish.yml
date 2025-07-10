@@ -18,6 +18,6 @@ jobs:
       - name: Add npm token
         run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
       - name: Bump version
-        run: npm version patch
+        run: npm version patch --no-git-tag-version
       - name: Publish
         run: npm publish
