@@ -1,15 +1,11 @@
 name: Npm Publish
 run-name: ${{ github.actor }} is publishing
 
-on:
-  workflow_run:
-    workflows: ["tests"]
-    types:
-      - completed
+on: [push]
 
 jobs:
   publish:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    #if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
