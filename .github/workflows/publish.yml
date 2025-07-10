@@ -21,3 +21,7 @@ jobs:
         run: npm version patch --no-git-tag-version
       - name: Publish
         run: npm publish
+      - name: Commit changes
+        run: git commit -am "Bump version"
+      - name: Push changes
+        run: git push
