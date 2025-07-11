@@ -12,7 +12,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build",
-    "build:docs": "vite build --config vite.docs.config.ts",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
     "prettier": "prettier --write \"**/*.{css,ts,tsx}\"",
