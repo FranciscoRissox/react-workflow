@@ -15,8 +15,7 @@ jobs:
         run: npm install
       - name: Build docs
         run: npm run build:docs
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GH_PAT }}
-          publish_dir: ./docs
+      - name: Commit message
+        run: git commit -am "Build docs"
+      - name: Push changes
+        run: git push
