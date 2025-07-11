@@ -1,50 +1,29 @@
 {
-  "name": "@franciscorissox/react-workflow",
-  "private": false,
-  "version": "1.0.9",
+  "name": "live-test",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
-  "homepage": "https://franciscorissox.github.io/react-workflow",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc --p ./tsconfig-build.json && vite build",
-    "build:docs": "vite build --config vite.docs.config.ts",
-    "prepublishOnly": "npm run build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "prettier": "prettier --write \"**/*.{css,ts,tsx}\"",
-    "test-ct": "playwright test -c playwright-ct.config.ts"
-  },
-  "sideEffects": [
-    "**/*.css"
-  ],
-  "peerDependencies": {
-    "react": ">=17",
-    "react-dom": ">=17"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "@playwright/experimental-ct-react": "^1.53.2",
-    "@types/node": "^24.0.12",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.2",
-    "eslint": "^9.29.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "glob": "^11.0.3",
-    "globals": "^16.2.0",
-    "prettier": "^3.6.2",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.34.1",
-    "vite": "^7.0.0",
-    "vite-plugin-dts": "^4.5.4",
-    "vite-plugin-lib-inject-css": "^2.2.2"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "uuid": "^11.1.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^9.30.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.4"
   }
 }

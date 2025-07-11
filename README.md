@@ -1,44 +1,69 @@
-<p><strong>Workflow builder component for React</strong></p>
+# React + TypeScript + Vite
 
-<br>
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-![NPM Version](https://img.shields.io/npm/v/%40franciscorissox%2Freact-workflow)
-![GitHub License](https://img.shields.io/github/license/franciscorissox/react-workflow)
-![NPM Downloads](https://img.shields.io/npm/d18m/%40franciscorissox%2Freact-workflow)
-![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/%40franciscorissox%2Freact-workflow)
+Currently, two official plugins are available:
 
-<br>
- 
-# Overview
- 
-## Features
-* Workflow editor that allows you to add nodes, move them around, and connect them easily.
-* Supports zooming and panning on both mobile and desktop.
-* Fully customizable: background, node appearance, and link styles.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-<strong>Wanna try it live? -> [todolink](https://franciscorissox.github.io/react-workflow/)</strong>
+## Expanding the ESLint configuration
 
-## Requirements
-* Requires React >= 17
-## Built using
-* Vite (packaging)
-* Playwright (tests)
-# Installation
-If you use npm
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```bash
-npm i @franciscorissox/react-workflow
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
- 
-or with yarn
- 
-```bash
-yarn add @franciscorissox/react-workflow
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
- 
-# Examples
-## Basic usage
-## Advanced pattern
- 
-# Contributions
-issue instructions
