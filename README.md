@@ -16,7 +16,7 @@
 * Supports zooming and panning on both mobile and desktop.
 * Fully customizable: background, node appearance, and link styles.
 
-<strong>Wanna try it live? -> [todolink](https://franciscorissox.github.io/react-workflow/)</strong>
+<strong>Wanna try it live? -> [https://franciscorissox.github.io/react-workflow/](https://franciscorissox.github.io/react-workflow/)</strong>
 
 ## Requirements
 * Requires React >= 17
