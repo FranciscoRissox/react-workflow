@@ -4,6 +4,7 @@ import { LinkNodeData, NodeData } from '../../types';
 import { Socket } from './socket';
 import { SocketPosition } from '../../types';
 import { socketIsConnected } from '../../utils';
+import { OFFSET } from '../../constants';
 
 type WorkflowNodeProps = {
   nodeData: NodeData;
@@ -16,7 +17,6 @@ type WorkflowNodeProps = {
   setNodeRef: (id: string, nodeRef: React.RefObject<HTMLDivElement>) => void;
 };
 
-const OFFSET = 2500;
 
 export const WorkflowNode: React.FC<WorkflowNodeProps> = ({
   nodeData,

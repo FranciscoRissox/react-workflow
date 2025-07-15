@@ -4,6 +4,7 @@ import { getNodeById } from '../../utils';
 import { getSocketPosition } from '../../utils';
 import Link from './link';
 import { NodeData } from '../../types';
+import { OFFSET } from '../../constants';
 
 export const SvgRenderer = ({
   origin,
@@ -54,7 +55,7 @@ export const SvgRenderer = ({
         return (
           <Link
             key={idx}
-            coordinates={{ x1: startPos.x, y1: startPos.y, x2: endPos.x, y2: endPos.y }}
+            coordinates={{ x1: startPos.x+OFFSET, y1: startPos.y+OFFSET, x2: endPos.x+OFFSET, y2: endPos.y+OFFSET }}
             style={lineStyle}
           />
         );
