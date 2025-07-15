@@ -1,8 +1,8 @@
 name: Build Docs on [LIVE-TEST]
-on: 
-    push:
-        branches:
-            - live-test
+on:
+  push:
+    branches:
+      - live-test
 permissions:
   contents: write
 
@@ -28,7 +28,7 @@ jobs:
           git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/FranciscoRissox/react-workflow.git
       - name: Commit message
         run: |
-            git add -f docs/
-            git commit -am "Build docs"
+          git add -f docs/
+          git commit -am "Build docs"
       - name: Push changes
         run: git push

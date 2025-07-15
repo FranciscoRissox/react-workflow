@@ -1,62 +1,91 @@
-
-import './style.css'
-import { useWorkflow, WorkFlow } from "@franciscorissox/react-workflow";
+import './style.css';
+import { useWorkflow, WorkFlow } from '@franciscorissox/react-workflow';
 
 const baseNode: any = {
-  position:{
-    x:500,y:500
+  position: {
+    x: 500,
+    y: 500,
   },
-  style:{
-    height:50,
-    width:200,
-    border:'1px solid black',
-    borderRadius:'6px'
+  style: {
+    height: 50,
+    width: 200,
+    border: '1px solid black',
+    borderRadius: '6px',
   },
-  enabledSockets:{
-    LEFT:{lineStyle:{strokeWidth:1,strokeColor:'gray'}},
-    RIGHT:{lineStyle:{strokeWidth:1,strokeColor:'gray'}},
-  }
-}
+  enabledSockets: {
+    LEFT: { lineStyle: { strokeWidth: 2, strokeColor: 'green' } },
+    RIGHT: { lineStyle: { strokeWidth: 2, strokeColor: 'green' } },
+  },
+};
 
 const startNode = {
-  ...baseNode, children: 'Start'
-}
+  ...baseNode,
+  children: 'Start',
+};
 
 const endNode = {
-  ...baseNode, children: 'End'
-}
+  ...baseNode,
+  children: 'End',
+};
 
 const apiNode = {
-  ...baseNode, children: 'Api Call'
-}
+  ...baseNode,
+  children: 'Api Call',
+};
 
 const functionNode = {
-  ...baseNode, children: 'Function'
-}
+  ...baseNode,
+  children: 'Function',
+};
 
 function App() {
-
   const workflow = useWorkflow();
-  
+
   return (
     <div className="w-full h-screen bg-gray-200 flex">
-      <div className='h-screen bg-gray-500 w-1/4 flex flex-col'>
-        <AddNode onAddNode={() => workflow.actions.addNode(startNode)} text="Add Start"/>
-        <AddNode onAddNode={() => workflow.actions.addNode(endNode)} text="Add End"/>
-        <AddNode onAddNode={() => workflow.actions.addNode(apiNode)} text="Add Api call"/>
-        <AddNode onAddNode={() => workflow.actions.addNode(functionNode)} text="Add Function"/>
+      <div className="h-screen bg-blue-500 w-30 flex flex-col">
+        <div className="w-full bg-gray-200">
+          <h1 className="text-center text-blue-950 font-bold text-xl">React Workflow</h1>
+        </div>
+        <div className="flex flex-col h-[100%]">
+          <AddNode onAddNode={() => workflow.actions.addNode(startNode)} text="Add Start" />
+          <AddNode onAddNode={() => workflow.actions.addNode(endNode)} text="Add End" />
+          <AddNode onAddNode={() => workflow.actions.addNode(apiNode)} text="Add Api call" />
+          <AddNode onAddNode={() => workflow.actions.addNode(functionNode)} text="Add Function" />
+        </div>
+
+        <GitHubButton />
       </div>
-      <div className='w-3/4'>
-        <WorkFlow {...workflow} width='800px' height='800px'/>
+      <div className="w-[100%]">
+        <WorkFlow {...workflow} width="100%" height="100%" />
       </div>
     </div>
-  )
+  );
 }
 
-const AddNode = ({onAddNode,text}: {onAddNode: (node: any) => void, text: string}) => {
+const AddNode = ({ onAddNode, text }: { onAddNode: (node: any) => void; text: string }) => {
   return (
-    <button className='bg-blue-500 text-white p-2 rounded mt-2 mx-2' onClick={() => onAddNode({type: 'node', data: {label: text}})}>{text}</button>
-  )
-}
+    <button
+      className="bg-blue-200 border-blue-300 text-white p-2 rounded mt-2 mx-2"
+      onClick={() => onAddNode({ type: 'node', data: { label: text } })}
+    >
+      <div className="flex flex-row items-center justify-center text-blue-950">{text}</div>
+    </button>
+  );
+};
 
-export default App
+const GitHubButton = () => {
+  return (
+    <button className=" mt-5 w-full h-10 bg-blue-300 flex flex-row items-center justify-center font-semibold text-xs">
+      <a href="https://github.com/FranciscoRissox/react-workflow" target="_blank" rel="noreferrer">
+        <img
+          src="https://icongr.am/simple/github.svg?size=24&color=currentColor"
+          alt="github"
+          className="inline-block mr-1"
+        />
+        <div className="inline-block text-blue-950">Visit GitHub</div>
+      </a>
+    </button>
+  );
+};
+export default App;
