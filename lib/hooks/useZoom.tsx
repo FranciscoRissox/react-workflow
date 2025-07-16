@@ -13,21 +13,28 @@ export const useZoomPan = () => {
   const initialPinchDistance = useRef<number | null>(null);
   const lastScale = useRef<number>(scale);
 
-  const handleZoom = (mouseX: number, mouseY: number, delta: number) => {
-    const scaleAmount = 0.1;
-
-    const oldScale = scale;
-    if (delta < 0) {
-      setScale(scale => Math.min(scale + scaleAmount, MAX));
-    } else {
-      setScale(scale => Math.max(scale - scaleAmount, MIN));
+  const handleZoom = (delta: number) => {
+    //cant go pass the limit
+    if((scale === MIN && delta > 0) || (scale === MAX && delta < 0)){
+      return;
     }
 
-    setOrigin(origin => ({
-      x: origin.x - (mouseX - origin.x) * (scale / oldScale - 1),
-      y: origin.y - (mouseY - origin.y) * (scale / oldScale - 1),
-    }));
-  };
+    const scaleAmount = 0.1;
+
+    if (delta < 0) {
+      setScale(scale => Math.min(scale + scaleAmount, MAX));
+      setOrigin(origin => ({
+        x: origin.x - 300,
+        y: origin.y - 300,
+      }));
+    } else {
+      setScale(scale => Math.max(scale - scaleAmount, MIN));
+      setOrigin(origin => ({
+        x: origin.x + 300,
+        y: origin.y + 300,
+      }));
+    }
+  }
 
   const handleMouseDown = (clientX: number, clientY: number) => {
     setIsDragging(true);

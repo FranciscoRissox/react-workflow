@@ -1,11 +1,11 @@
 import styles from './zoomPanel.module.css';
-export const ZoomPanel = ({ handleZoomIn, handleZoomOut }: { handleZoomIn: () => void; handleZoomOut: () => void }) => {
+export const ZoomPanel = ({ handleZoomIn, handleZoomOut, colorScale='blue' }: { handleZoomIn: () => void; handleZoomOut: () => void; colorScale: 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'gray' }) => {
   return (
     <div className={styles.zoompanel}>
-      <button className={styles.zoombutton} onClick={handleZoomOut}>
+      <button className={styles.zoombutton + ' ' + styles[colorScale]} onClick={handleZoomOut}>
         -
       </button>
-      <button className={styles.zoombutton} onClick={handleZoomIn}>
+      <button className={styles.zoombutton + ' ' + styles[colorScale]} onClick={handleZoomIn}>
         +
       </button>
     </div>

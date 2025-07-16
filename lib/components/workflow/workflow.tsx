@@ -42,7 +42,7 @@ export const WorkFlow = ({
   const { selectNode } = useNodeLink((link: LinkNode) => addLink(link));
 
   const handleWheel = (e: WheelEvent) => {
-    handleZoom(e.clientX, e.clientY, e.deltaY);
+    handleZoom(e.deltaY);
   };
 
   const stopPropagation = (e: any, func: any) => {
@@ -131,7 +131,7 @@ export const WorkFlow = ({
         })}
       </div>
 
-      <ZoomPanel handleZoomIn={() => handleZoom(0, 0, -1)} handleZoomOut={() => handleZoom(0, 0, 1)} />
+      <ZoomPanel colorScale={backgroundColor} handleZoomIn={() => handleZoom(-1)} handleZoomOut={() => handleZoom(1)} />
     </div>
   );
 };
